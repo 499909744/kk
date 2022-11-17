@@ -2,3 +2,4 @@ server:
   port: ${PORT:8080}
 
 node: ${NODE:1}
+serviceAddr:  ${SERVICE_ADDR:http://192.168.3.61:18080}

@@ -12,85 +12,33 @@
     <artifactId>kk</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>kk</name>
-    <description>kk</description>
+    <name>kk2</name>
+    <description>kk2</description>
     <properties>
         <java.version>1.8</java.version>
         <docker.host>http://192.168.3.61:2375</docker.host>
-        <docker.repository>registry.cn-shanghai.aliyuncs.com/dpw/</docker.repository>
-        <docker.registry.name>common-api</docker.registry.name>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.10.0</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>kk</finalName>
+        <finalName>kk2</finalName>
         <plugins>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <!--只需将插件的goal绑定在某个phase，添加后，执行mvn package 时，插件自动为我们构建Docker 镜像 -->
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--基础镜像<baseImage>java</baseImage>-->
-                    <baseImage>registry.cn-shanghai.aliyuncs.com/dpw/java8:1.0</baseImage>
-                    <imageName>${docker.repository}${docker.registry.name}</imageName>
-                    <imageTags>
-                        <imageTag>
-                            latest
-                        </imageTag>
-                    </imageTags>
-                    <exposes>
-                        <expose>4201</expose>
-                        <expose>4211</expose>
-                    </exposes>
-                    <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
-                    <!-- 指定Dockerfile所在的路径, Dockerfile方式才需要该配置 <dockerDirectory>${project.basedir}</dockerDirectory>-->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <!--必须和maven setting.xml中一致-->
-                    <serverId>docker-aliyun</serverId>
-                    <registryUrl>${docker.repository}</registryUrl>
-                    <pushImage>true</pushImage>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.2.4.RELEASE</version>
-                <!--加入下面两项配置-->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.yl.commonApi.CommonApiApplication</mainClass>
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
             </plugin>
-
-            <!--<plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
@@ -116,7 +64,7 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 
